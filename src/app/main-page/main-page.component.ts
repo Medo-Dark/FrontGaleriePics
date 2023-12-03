@@ -26,13 +26,15 @@ export class ImageService {
 }
 
 interface Image {
-  id:string
+  id:string;
   src: string;
   alt: string;
   themeId:string;
-  moment:any,
+  moment:any;
   histogram:any;
-  dominant:any
+  dominant:any;
+  tamura:any;
+  gabor:any;
   selected: boolean;
 }
 
@@ -73,9 +75,9 @@ export class MainPageComponent {
     this.ImageSrv.getUserImages(this.user._id).subscribe((Imgs:any)=>{
       for(let img of Imgs){
         this.images.push({id:img._id,src: img.src, alt: img.Name, selected: false,
-          themeId:img.ThemeId,moment:img.moment,histogram:img.Histogram,dominant:img.dominant})
+          themeId:img.ThemeId,moment:img.moment,histogram:img.Histogram,dominant:img.dominant,tamura:img.tamura,gabor:img.gabor})
         this.ThemeImages.push({id:img._id,src: img.src, alt: img.Name, selected: false,
-          themeId:img.ThemeId,moment:img.moment,histogram:img.Histogram,dominant:img.dominant})
+          themeId:img.ThemeId,moment:img.moment,histogram:img.Histogram,dominant:img.dominant,tamura:img.tamura,gabor:img.gabor})
       }
     })
   }
@@ -91,16 +93,15 @@ export class MainPageComponent {
           const img = reader.result as string ;
           var Id = ""
           this.ImageSrv.SaveImage(this.themeId,this.user._id,file.name,img).subscribe((result :any) => {
-            //console.log(result,"SUCCESSES")
             Id = result._id ;
             this.FlaskSrv.GetImageDetails(img).subscribe((result:any)=>{
               this.images.push({ id:result._id,src: img, alt: file.name, selected: false,themeId:result.ThemeId,
-                moment:result.color_moments,histogram:result.histogram,dominant:result.dominant_colors});
+                moment:result.color_moments,histogram:result.histogram,dominant:result.dominant_colors,tamura:result.tamura,gabor:result.gabor});
               this.ThemeImages.push({ id:result._id,src: img, alt: file.name, selected: false,themeId:result.ThemeId,
-                moment:result.color_moments,histogram:result.histogram,dominant:result.dominant_colors});
-              this.ImageSrv.SaveImgDetails(Id,result.dominant_colors,result.histogram,result.color_moments).subscribe((result)=>
+                moment:result.color_moments,histogram:result.histogram,dominant:result.dominant_colors,tamura:result.tamura,gabor:result.gabor});
+              this.ImageSrv.SaveImgDetails(Id,result.dominant_colors,result.histogram,result.color_moments,result.tamura,result.gabor).subscribe((result)=>
               {
-                console.log(result,"Sv details")
+                console.log(result,this.images)
               },(error) => {
                 console.log(error,"Err while trying to save details")
               })

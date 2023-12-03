@@ -29,11 +29,10 @@ export class ImagesService {
     return this.http.delete(`http://127.0.0.1:3000/image/${ImageId}`)
   }
 
-  SaveImgDetails(ImageId:string,dominant:any,Histogram:any,moment:any){
-    console.log(dominant,"YYYYYYYYYYYy")
+  SaveImgDetails(ImageId:string,dominant:any,Histogram:any,moment:any,tamura:any,gabor:any){
     return this.http.put(`http://127.0.0.1:3000/image/Details/${ImageId}`,{
-      Histogram: {Red:Histogram.red,Green:Histogram.green,Blue:Histogram.blue},dominant:dominant,moment:moment
-    })
+      Histogram: {Red:Histogram.red,Green:Histogram.green,Blue:Histogram.blue},dominant:dominant,
+      moment:moment,tamura:tamura,gabor:gabor})
   }
 
 }

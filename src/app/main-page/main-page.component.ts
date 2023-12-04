@@ -171,5 +171,11 @@ export class MainPageComponent {
   reset(){
     this.ThemeImages = this.images;
   }
+  displayDescripteurs(image:Image): void{
+    this.router.navigate(['/descripteurs', {imageData: JSON.stringify(image)}]);
+  }
+  search(image:Image): void{
+    this.router.navigate(['/similars', {imageData: JSON.stringify(image)}]);
+  }
 }
 

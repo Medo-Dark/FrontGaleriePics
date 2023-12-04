@@ -24,8 +24,10 @@ export class CustomImageComponent implements OnInit {
   inZoomMode: boolean = false;
   inDomMode:boolean = false;
   inHistogramMode:boolean = false;
+  inMomentMode: boolean = false;
   HistogramSrc:string="";
   DominantSrc:string="";
+  MomentSrc: string="";
   imgResultBeforeCompression: string = this.imageUrl;
   imgResultAfterCompression: string = '';
   inCompressMode: boolean = false;
@@ -35,6 +37,22 @@ export class CustomImageComponent implements OnInit {
   quality: number = 50;
   transform: ImageTransform = {};
   scale=1;
+
+  a_mean :string="";
+  b_mean :string="";
+  l_mean :string="";
+  a_std :string="";
+  b_std :string="";
+  l_std :string="";
+  a_skew :string="";
+  b_skew :string="";
+  l_skew :string="";
+  a_kurtosis :string="";
+  b_kurtosis :string="";
+  l_kurtosis :string="";
+  Momentsrc: string[] =[];
+
+
 
   User :any = null;
   EditedImage:any=null;
@@ -116,6 +134,7 @@ export class CustomImageComponent implements OnInit {
         this.inCompressMode = false;
       this.inDomMode = false;
       this.inHistogramMode = false;
+      this.inMomentMode = false;
     }
 
     toggleZoomMode() {
@@ -124,6 +143,7 @@ export class CustomImageComponent implements OnInit {
         this.inCompressMode = false;
       this.inDomMode = false;
       this.inHistogramMode = false;
+      this.inMomentMode = false;
     }
     compressFile() {
 
@@ -141,6 +161,7 @@ export class CustomImageComponent implements OnInit {
     this.inCropMode = false;
     this.inDomMode = false;
     this.inHistogramMode = false;
+    this.inMomentMode = false;
   }
   toggleDomMode(){
     this.inCompressMode = false;
@@ -148,6 +169,7 @@ export class CustomImageComponent implements OnInit {
     this.inCropMode = false;
     this.inDomMode = true;
     this.inHistogramMode = false;
+    this.inMomentMode = false;
     this.flaskSrv.GetDominant(this.imageUrl).subscribe((res:any)=>{
       this.DominantSrc = res.data;
     })
@@ -158,11 +180,22 @@ export class CustomImageComponent implements OnInit {
     this.inZoomMode = false;
     this.inCropMode = false;
     this.inDomMode = false;
+    this.inMomentMode = false;
     this.inHistogramMode = true;
     this.flaskSrv.GetHisto(this.imageUrl).subscribe((res:any)=>{
       this.HistogramSrc = res.data;
     })
 
+  }
+
+  toggleMomentMode(){
+
+    this.inCompressMode = false;
+    this.inZoomMode = false;
+    this.inCropMode = false;
+    this.inDomMode = false;
+    this.inHistogramMode = false;
+    this.inMomentMode = true;
   }
   saveChanges(src:string,func:string){
     this.ImageSrv.SaveImage(this.EditedImage.themeId,this.User._id,this.EditedImage.alt +" "+func+"PerfectImage",src).subscribe((result :any) => {
@@ -176,4 +209,7 @@ export class CustomImageComponent implements OnInit {
     })
   }
 
+  }
+  function saveChanges(src: any, string: any, func: any, string1: any): ((error: any) => void) | null | undefined {
+    throw new Error('Function not implemented.');
   }

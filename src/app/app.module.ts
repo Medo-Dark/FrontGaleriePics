@@ -21,7 +21,11 @@ import { NgxImageZoomModule } from 'ngx-image-zoom';
 import {NgxImageCompressService} from 'ngx-image-compress';
 import {MatSliderModule} from '@angular/material/slider';
 import {HttpClientModule} from "@angular/common/http";
-import { ChartComponent } from './chart/chart.component';
+import { DescripteursComponent } from './descripteurs/descripteurs.component';
+import { CardModule } from 'primeng/card';
+import { SimilarsComponent } from './similars/similars.component';
+import { KnobModule } from 'primeng/knob';
+import { SliderModule } from 'primeng/slider';
 
 
 @NgModule({
@@ -32,7 +36,9 @@ import { ChartComponent } from './chart/chart.component';
     HomeComponent,
     MainPageComponent,
     CustomImageComponent,
-    ChartComponent
+    DescripteursComponent,
+    SimilarsComponent,
+
   ],
   imports: [
     MatSliderModule,
@@ -48,7 +54,10 @@ import { ChartComponent } from './chart/chart.component';
     BrowserAnimationsModule,
     HammerModule,
     NgxImageZoomModule,
-    HttpClientModule
+    HttpClientModule,
+    CardModule,
+    KnobModule,
+    SliderModule,
   ],
   providers: [
     { provide: HAMMER_GESTURE_CONFIG, useClass: LyHammerGestureConfig },

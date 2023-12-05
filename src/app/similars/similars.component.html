@@ -1,22 +1,26 @@
 <div class="menu">
   <img src="./assets/image.png" alt="Description of the image" class="myimage" routerLink="/main">
   <span class="spn">Picture Perfect</span>
+  <button  (click)="FeedBack()"  *ngIf="counter == Similar.length" class="upload-button">Submit</button>
 </div>
 
 <div class="gallery" style="display: flex; justify-content: space-between; align-items: flex-start;">
   <!-- Container for Image and Color Boxes -->
-  <div class="comps" style="display: flex; flex-direction: row; position: relative;">
+  <div class="comps" style="display: flex; flex-direction: row; position: relative; max-width: 100%;">
     <div class="pro-card">
-      <img class="image" [src]=image.src alt="Description of the image">
+      <img class="image" [src]="image.src" alt="Description of the image" style="max-width: 100%;">
     </div>
+
+
   </div>
 
-  <div class="p-4 sm:ml-64">
+
+  <div class="p-4 sm:ml-64 flex">
     <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
       <div class="grid grid-cols-3 gap-4 mb-4" style="justify-content: space-around; transform: translateX(30%);">
 
         <div class="image1" *ngFor="let image of Similar">
-          <img [src]="image.src" />
+          <img style="max-width: 400px;" [src]="image.src" />
 
           <div style="display: flex;">
             <div class="button-container">
@@ -38,4 +42,3 @@
 
 
   </div>
-

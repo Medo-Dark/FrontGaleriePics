@@ -48,7 +48,7 @@ export class MainPageComponent {
 
   images: Image[] = [];
   ThemeImages : Image [] = [];
-  themes:any[]=[];
+  themes:any=[];
   user:any = null;
   themename:string = "";
   themeId:string = "";
@@ -90,15 +90,15 @@ export class MainPageComponent {
         const reader = new FileReader();
         reader.onload = () => {
           const img = reader.result as string ;
-          var Id = ""
-          this.ImageSrv.SaveImage(this.themeId,this.user._id,file.name,img).subscribe((result :any) => {
-            Id = result._id ;
+          this.ImageSrv.SaveImage(this.themeId,this.user._id,file.name,img).subscribe((res :any) => {
+
             this.FlaskSrv.GetImageDetails(img).subscribe((result:any)=>{
-              this.images.push({ id:result._id,src: img, alt: file.name, selected: false,themeId:result.ThemeId,
+
+              this.images.push({ id:res._id,src: img, alt: file.name, selected: false,themeId:res.ThemeId,
                 moment:result.color_moments,histogram:result.histogram,dominant:result.dominant_colors,tamura:result.tamura,gabor:result.gabor});
-              this.ThemeImages.push({ id:result._id,src: img, alt: file.name, selected: false,themeId:result.ThemeId,
+              this.ThemeImages.push({ id:res._id,src: img, alt: file.name, selected: false,themeId:res.ThemeId,
                 moment:result.color_moments,histogram:result.histogram,dominant:result.dominant_colors,tamura:result.tamura,gabor:result.gabor});
-              this.ImageSrv.SaveImgDetails(Id,result.dominant_colors,result.histogram,result.color_moments,result.tamura,result.gabor).subscribe((result)=>
+              this.ImageSrv.SaveImgDetails(res._id,result.dominant_colors,result.histogram,result.color_moments,result.tamura,result.gabor).subscribe((result)=>
               {
                 console.log(result,this.images)
               },(error) => {
@@ -151,15 +151,12 @@ export class MainPageComponent {
     this.ThemeSrv.CreateTheme(this.themename,this.user._id).subscribe(
       (response) => {
         // Handle the success response
+        this.themes.push(response)
       },
       (error) => {
         // Handle the error response
         console.error('Error:', error);
       });
-
-
-    location.reload();
-
   }
 
   GetThemePics(id:string){

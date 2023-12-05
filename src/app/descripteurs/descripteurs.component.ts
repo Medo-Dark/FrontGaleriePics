@@ -1,6 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Chart, CategoryScale, LinearScale, Title, Tooltip, Legend} from 'chart.js/auto';
+import {FlaskService} from '../Services/flask.service'
+
+
+
+
+
+
+
+
 @Component({
   selector: 'app-descripteurs',
   templateUrl: './descripteurs.component.html',
@@ -22,18 +31,19 @@ export class DescripteursComponent implements OnInit {
   a_kurtosis :string="";
   b_kurtosis :string="";
   l_kurtosis :string="";
+  Similar :[] = []
   public chart: any;
   createChart(){
-  
+
     // Add this array of labels
 const xLabels = Array.from({ length: 251 }, (_, i) => i.toString()); // Creates an array from 0 to 250
 
 
     this.chart = new Chart("MyChart", {
-      type: 'line', 
+      type: 'line',
 
       data: {// values on X-Axis
-        
+
 	       datasets: [
           {
             label: "Blue",
@@ -61,7 +71,7 @@ const xLabels = Array.from({ length: 251 }, (_, i) => i.toString()); // Creates 
             pointRadius:0,
             fill: false,
             borderWidth:1.5
-          }  
+          }
         ]
       },
       options: {
@@ -73,9 +83,9 @@ const xLabels = Array.from({ length: 251 }, (_, i) => i.toString()); // Creates 
               display: true,
               text: 'Value'
             },
-            labels: xLabels 
+            labels: xLabels
           },
-          
+
           y: {
               title: {
                   display: true,
@@ -85,25 +95,26 @@ const xLabels = Array.from({ length: 251 }, (_, i) => i.toString()); // Creates 
       },
       animation: {
         duration: 2000,
-        easing: 'easeInOutQuart' 
+        easing: 'easeInOutQuart'
       }
-      
+
       }
-      
-      
+
+
     });
-    
+
   }
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(private router: Router, private route: ActivatedRoute  ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      const imageData = params['imageData'];   
+      const imageData = params['imageData'];
       if (imageData) {
         this.image = JSON.parse(imageData);
       }
-      console.log(this.image);
     });
+
+
     this.createChart();
   }
 

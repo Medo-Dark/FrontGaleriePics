@@ -86,7 +86,6 @@ export class MainPageComponent {
     const inputElement = event.target as HTMLInputElement;
     if (inputElement.files && inputElement.files.length > 0) {
       for (let i = 0; i < inputElement.files.length; i++) {
-        console.log(i,File.length)
         const file = inputElement.files[i];
         const reader = new FileReader();
         reader.onload = () => {
@@ -175,7 +174,7 @@ export class MainPageComponent {
     this.router.navigate(['/descripteurs', {imageData: JSON.stringify(image)}]);
   }
   search(image:Image): void{
-    this.router.navigate(['/similars', {imageData: JSON.stringify(image)}]);
+    this.router.navigate(['/similars', {imageData: JSON.stringify(image),user:JSON.stringify(this.user)}]);
   }
 }
 

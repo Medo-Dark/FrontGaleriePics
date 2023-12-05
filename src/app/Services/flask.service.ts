@@ -20,5 +20,8 @@ export class FlaskService {
     return this.http.post(`http://127.0.0.1:5000/upload/`,
       {base64_image:src})
   }
+  GetSimilarities(ImgId:string, userId:string){
+    return this.http.get(`http://127.0.0.1:5000/similar/${ImgId}/${userId}`)
+  }
 
 }

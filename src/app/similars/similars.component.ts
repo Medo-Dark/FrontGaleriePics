@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Chart, CategoryScale, LinearScale, Title, Tooltip, Legend} from 'chart.js/auto';
+import {FlaskService} from "../Services/flask.service";
 
 interface Image {
   id:string
@@ -20,22 +20,31 @@ interface Image {
 })
 export class SimilarsComponent implements OnInit {
   images: Image[] = [];
+  user :any
   ThemeImages : Image [] = [];
+  Similar : any = []
   image: any;
   imageSrc:string='';
   galleryImageUrl: string = '';
   value=0;
 
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(private router: Router, private route: ActivatedRoute,private FlaskSrv:FlaskService) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      const imageData = params['imageData'];   
+      const imageData = params['imageData'];
+      const user = params['user']
       if (imageData) {
         this.image = JSON.parse(imageData);
+        this.user = JSON.parse(user);
       }
-      console.log(this.image);
     });
+    this.FlaskSrv.GetSimilarities(this.image.id,this.user._id).subscribe((res:any)=>{
+      this.Similar = res
+      console.log(res)
+    },(err)=>{
+      console.log("Facing err while trying to retrieve Similarities",err)
+    })
   }
   toggleImageSelection(image: Image): void {
     image.selected = !image.selected;
